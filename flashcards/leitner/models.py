@@ -49,8 +49,7 @@ class Card(models.Model):
         """
         current_box_num = self.on_box.box_type
 
-        if current_box_num < self.on_deck.boxes.count() - 1:
-            # Nothing happens if the card is on the last box
+        if current_box_num < self.on_deck.boxes.count() - 1:  # Nothing happens if the card is on the last box
             self.on_box = self.on_deck.boxes.get(box_type=current_box_num + 1)
             self.save()
 
@@ -73,10 +72,7 @@ class Session(models.Model):
 
     def current_card(self) -> Optional[Card]:
         """
-        Gets the next card to use in the study session
-
-        Returns:
-            Card or None: Next available card. If it doesn't exist returns None
+        Gets the current card to use in the study session
         """
         qs = Card.objects.filter(on_box=self.current_box).exclude(finished_session__session=self).order_by(
             'updated_at').first()

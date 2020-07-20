@@ -257,6 +257,7 @@ class TestSessionRelatedViews(TestCase):
         last_session_after = Session.objects.last()
 
         self.assertNotEqual(last_session_before, last_session_after)
+        self.assertEqual(last_session_after.deck, self.deck)
 
     def test_session_start_view_post_with_valid_form_and_empty_box(self):
         """ Asserts a session was NOT created after POST method, given a valid form
